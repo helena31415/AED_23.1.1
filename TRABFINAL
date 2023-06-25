@@ -1,0 +1,87 @@
+ps <- read.csv('train.csv',h=T,sep=';',dec=',', na.strings = '-999')
+psMeta <- read.csv("metadata.csv",h=T,sep=',',dec=";")
+######### notar que os csv foram construídos diferentemente *sep *dec
+
+head(ps)
+head(psMeta)
+
+AVALIAÇÃO DA NATUREZA GERAL DAS VARIAVEIS VIA metadata.csv
+
+todas = psMeta[ ,2]
+#dim(todas)
+table(todas)
+#summary(todas)
+
+
+quais_sao = unique(todas)
+quais_sao
+
+*QUAIS SÃO AS QUE EXISTEM AQUI: 'Qualitativo nominal''Quantitativo discreto''Qualitativo ordinal''Quantitativo continua'*
+
+ps <- read.csv('train.csv',h=T,sep=';',dec=',', na.strings = '-999')
+var_discretas = ps[psMeta[,2]=="Quantitativo discreto"]
+
+#head(var_discretas)
+
+boxplot(var_discretas)
+
+boxplot(ps[psMeta[,2] == 'Quantitativo discreto'])
+
+head(variaveis_discretas)
+### perceber que as variaveis discretas são: Vars [24,25,27,40,44-54]
+
+#colnames(ps)
+
+boxplot(variaveis_discretas)
+
+Análise tabela geral
+
+dimNA = sum(1*is.na(ps))
+dimNA
+
+ps_minus1row <- subset(ps,select=-c(id, y))
+
+#colnames(ps_minus1row)
+
+dim_rel_ps = dim(ps_minus1row)
+#dim_rel_ps
+
+prop_NA = 100* dimNA/(14123*69)
+prop_NA
+
+summary(ps)
+
+boxplot(ps_minus1row)
+
+plot(ps_minus1row$var54,ps_minus1row$var62,ylab='nao sei',xlab='valores que as variaveis 54 e 62 podem ter')
+
+hist(ps_minus1row$var54, main='Histograma da variavel 54',xlab='valores que ela pode assumir')
+
+barplot(table(ps$var54,ps$var62))
+
+#cor(ps_minus1row)
+install.packages("corrplot")
+library(corrplot)
+cor(ps)
+
+
+
+var_discretas = ps[psMeta[,2]=="Quantitativo discreto"]
+var_continuas = ps[psMeta[,2]=="Quantitativo continuo"]
+var_nominais = ps[psMeta[,2]=="Qualitativo nominal"]
+var_ordinais = ps[psMeta[,2]=="Quantitativo ordinal"]
+
+head(var_discretas)
+colnames(var_discretas)
+
+
+
+cor_toDiscretas <- cor(var_discretas[,colnames(var_discretas)!='y'],var_discretas$y)
+
+corrplot(cor_toDiscretas,method="circle",type="upper")
+
+plot(cor_toDiscretas)
+
+#unique(var_continuas)
+#unique(var_nominais)
+#unique(var_ordinais)
