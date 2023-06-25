@@ -85,3 +85,35 @@ plot(cor_toDiscretas)
 #unique(var_continuas)
 #unique(var_nominais)
 #unique(var_ordinais)
+
+plot(ps$y,main="clientes compradores (1) e clientes não compradores (0)",ylab="sim ou não, 0 ou 1",xlab="total de clientes")
+#pelo plot, parece haver a mesma quantidade de 0 e 1
+hist(ps$y,main="quantos clientes compram (1) e quantos não compram (0)",ylab="total de clientes",xlab="sim ou não, 0 ou 1")
+#pelo hist vemos que há muitos mais que não compram (0) do que compram (1)
+
+compradores = ps[,"y"]==1
+
+sum(compradores)
+
+
+naoCompradores = ps[,"y"]==0
+
+naoCompradores
+
+sum(compradores)/sum(naoCompradores)*100
+
+#for (x in 1:70){
+ # corrplot(cor(ps$var[x]),compradores)
+
+
+correlacaoCompradores = cor(ps,compradores)
+
+cor(ps$var24,compradores)
+cor(ps$var25,compradores)
+cor(ps$var54,compradores)
+corrplot(cor(var_discretas,compradores))
+
+install.packages("tidyverse")
+install.packages("corrr")
+
+
